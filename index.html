@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BILAL | Cyber Defense & Premium Web Dev</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        cyber: {
+                            dark: '#050b14',
+                            darker: '#02050a',
+                            blue: '#00e5ff',
+                            red: '#ff3366',
+                            purple: '#7b2cbf',
+                            border: 'rgba(0, 229, 255, 0.2)',
+                            text: '#8a9bb3'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #02050a;
+            color: #ffffff;
+            background-image: 
+                linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(5, 11, 20, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #ffffff, #8a9bb3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .text-gradient-blue {
+            background: linear-gradient(to right, #00e5ff, #0077ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-red {
+            background: linear-gradient(to right, #ff3366, #ff7733);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-3d {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-3d:hover {
+            transform: translateY(-5px);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #02050a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00e5ff;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyber-blue selection:text-black">
+
+    <nav class="fixed w-full z-50 glass-panel border-b border-cyber-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 cursor-pointer" onclick="navigate('home')">
+                    <span class="text-2xl font-bold tracking-tighter">
+                        <span class="text-white">BIL</span><span class="text-cyber-blue">AL.</span>
+                    </span>
+                    <span class="ml-2 text-xs font-mono text-cyber-text tracking-widest hidden sm:inline-block border border-cyber-border px-2 py-1 rounded">SYS_ONLINE</span>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <button onclick="navigate('home')" class="nav-btn active text-cyber-blue hover:text-cyber-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</button>
+                        <button onclick="navigate('services')" class="nav-btn text-cyber-text hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Services</button>
+                        <button onclick="navigate('academy')" class="nav-btn text-cyber-text hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Academy</button>
+                        <button onclick="navigate('contact')" class="nav-btn text-cyber-text hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</button>
+                    </div>
+                </div>
+
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-cyber-text hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-b border-cyber-border">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <button onclick="navigate('home'); toggleMobileMenu()" class="block w-full text-left text-cyber-blue px-3 py-2 rounded-md text-base font-medium">Home</button>
+                <button onclick="navigate('services'); toggleMobileMenu()" class="block w-full text-left text-cyber-text hover:text-white px-3 py-2 rounded-md text-base font-medium">Services</button>
+                <button onclick="navigate('academy'); toggleMobileMenu()" class="block w-full text-left text-cyber-text hover:text-white px-3 py-2 rounded-md text-base font-medium">Academy</button>
+                <button onclick="navigate('contact'); toggleMobileMenu()" class="block w-full text-left text-cyber-text hover:text-white px-3 py-2 rounded-md text-base font-medium">Contact</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-20 min-h-screen flex flex-col justify-center" style="background: rgba(10, 15, 30, 0.7);">
+
+        <section id="home" class="page-section active relative overflow-hidden" style="background: transparent;">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 relative" style="position: relative; z-index: 2;">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyber-blue opacity-10 rounded-full blur-[120px] pointer-events-none"></div>
+
+                <div class="text-center max-w-5xl mx-auto mb-16" style="position: relative; z-index: 2;">
+                    <div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-cyber-border bg-cyber-blue/5 text-cyber-blue font-mono text-xs md:text-sm tracking-widest uppercase">
+                        <i class="fas fa-shield-alt mr-2"></i> INTELLIGENT DIGITAL DEPLOYMENT & CYBER SECURITY
+                    </div>
+                    <h1 class="text-5xl md:text-8xl font-extrabold mb-8 tracking-tight leading-[1.1] font-sans">
+                        Bilal's Elite Academy. <br>
+                        <span class="text-gradient-blue">Secure Your Digital Edge.</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-cyber-text mb-12 max-w-3xl mx-auto leading-relaxed">
+                        Gain access to elite, production-ready training modules designed for modern engineers and security operators.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-5 max-w-md mx-auto">
+                        <button onclick="navigate('contact')" class="w-full sm:w-auto px-8 py-4 rounded-lg bg-cyber-blue hover:bg-cyan-400 text-black font-bold tracking-wide transition-all shadow-[0_0_15px_rgba(0,229,255,0.4)] hover:shadow-[0_0_25px_rgba(0,229,255,0.6)]">
+                            Deploy Your Project
+                        </button>
+                        <button onclick="navigate('services')" class="w-full sm:w-auto px-8 py-4 rounded-lg border border-cyber-border hover:border-cyber-blue text-white font-bold tracking-wide transition-all bg-transparent hover:bg-cyber-blue/5">
+                            Explore Solutions
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto" style="position: relative; z-index: 2;">
+                    <div class="card-3d glass-panel rounded-2xl p-8 border border-cyber-red/30 hover:border-cyber-red/60 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyber-red/5 to-transparent"></div>
+                        <div class="relative z-10">
+                            <div class="w-14 h-14 rounded-lg bg-cyber-red/10 flex items-center justify-center text-cyber-red text-2xl mb-6">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold mb-3 text-white">Premium B2B Services</h2>
+                            <p class="text-cyber-text mb-8 min-h-[60px]">Secure your infrastructure or build responsive, scalable web applications with zero compromises.</p>
+                            
+                            <ul class="space-y-3 mb-8 font-mono text-sm text-cyber-text">
+                                <li><i class="fas fa-check text-cyber-red mr-2"></i> Penetration Testing</li>
+                                <li><i class="fas fa-check text-cyber-red mr-2"></i> Custom Web Development</li>
+                                <li><i class="fas fa-check text-cyber-red mr-2"></i> Security Audits</li>
+                            </ul>
+
+                            <button onclick="navigate('services')" class="w-full py-4 rounded-lg bg-cyber-red hover:bg-red-600 text-white font-bold tracking-wide transition-all shadow-[0_0_15px_rgba(255,51,102,0.4)] hover:shadow-[0_0_25px_rgba(255,51,102,0.6)]">
+                                Book a Security Audit
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-3d glass-panel rounded-2xl p-8 border border-cyber-blue/30 hover:border-cyber-blue/60 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyber-blue/5 to-transparent"></div>
+                        <div class="relative z-10">
+                            <div class="w-14 h-14 rounded-lg bg-cyber-blue/10 flex items-center justify-center text-cyber-blue text-2xl mb-6">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold mb-3 text-white">Global Education</h2>
+                            <p class="text-cyber-text mb-8 min-h-[60px]">Master ethical hacking and modern web development through hands-on, real-world training.</p>
+                            
+                            <ul class="space-y-3 mb-8 font-mono text-sm text-cyber-text">
+                                <li><i class="fas fa-check text-cyber-blue mr-2"></i> Cyber Security Courses</li>
+                                <li><i class="fas fa-check text-cyber-blue mr-2"></i> Full-Stack Development</li>
+                                <li><i class="fas fa-check text-cyber-blue mr-2"></i> Certification Prep</li>
+                            </ul>
+
+                            <button onclick="navigate('academy')" class="w-full py-4 rounded-lg bg-cyber-blue hover:bg-cyan-400 text-black font-bold tracking-wide transition-all shadow-[0_0_15px_rgba(0,229,255,0.4)] hover:shadow-[0_0_25px_rgba(0,229,255,0.6)]">
+                                Explore Academy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-24 pt-10 border-t border-cyber-border text-center" style="position: relative; z-index: 2;">
+                    <p class="font-mono text-sm text-cyber-text mb-8 tracking-widest uppercase">Powered By Industry Standard Technologies</p>
+                    <div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 hover:opacity-100 transition-all duration-500">
+                        <i class="fab fa-linux text-4xl hover:text-white transition-colors"></i>
+                        <i class="fab fa-aws text-4xl hover:text-[#FF9900] transition-colors"></i>
+                        <i class="fab fa-docker text-4xl hover:text-[#2496ED] transition-colors"></i>
+                        <i class="fab fa-react text-4xl hover:text-[#61DAFB] transition-colors"></i>
+                        <i class="fab fa-python text-4xl hover:text-[#3776AB] transition-colors"></i>
+                        <i class="fab fa-node-js text-4xl hover:text-[#339933] transition-colors"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="page-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                <div class="text-center mb-16">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Absolute Execution in <br><span class="text-gradient-red">Security & Performance</span></h1>
+                    <p class="text-cyber-text max-w-2xl mx-auto">Targeting businesses, startups, and enterprises looking for uncompromising technical execution.</p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-12 mb-24">
+                    <div class="glass-panel p-8 md:p-10 rounded-2xl border-l-4 border-l-cyber-red relative group overflow-hidden">
+                        <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500">
+                            <i class="fas fa-bug text-9xl text-cyber-red"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold mb-4">Penetration Testing</h2>
+                        <p class="text-cyber-text mb-8 relative z-10">Identify and remediate critical vulnerabilities before malicious actors exploit them. We simulate real-world attacks to fortify your perimeter.</p>
+                        
+                        <div class="space-y-4 mb-8 relative z-10">
+                            <div class="flex items-start">
+                                <div class="bg-cyber-red/10 p-2 rounded text-cyber-red mr-4"><i class="fas fa-globe"></i></div>
+                                <div>
+                                    <h4 class="font-bold">Web App Hacking</h4>
+                                    <p class="text-sm text-cyber-text">OWASP Top 10, business logic flaws, and advanced injection vectors.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-cyber-red/10 p-2 rounded text-cyber-red mr-4"><i class="fas fa-network-wired"></i></div>
+                                <div>
+                                    <h4 class="font-bold">API Security</h4>
+                                    <p class="text-sm text-cyber-text">Authentication bypass, broken object level authorization (BOLA).</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="navigate('contact')" class="border border-cyber-red text-cyber-red hover:bg-cyber-red hover:text-white px-8 py-3 rounded-lg font-bold transition-colors relative z-10">
+                            Request a Scope
+                        </button>
+                    </div>
+
+                    <div class="glass-panel p-8 md:p-10 rounded-2xl border-l-4 border-l-white relative group overflow-hidden">
+                        <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500">
+                            <i class="fas fa-code text-9xl text-white"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold mb-4">Premium Web Development</h2>
+                        <p class="text-cyber-text mb-8 relative z-10">Custom, high-performance, responsive front-end and back-end architectures built with modern, secure frameworks.</p>
+                        
+                        <div class="space-y-4 mb-8 relative z-10">
+                            <div class="flex items-start">
+                                <div class="bg-white/10 p-2 rounded text-white mr-4"><i class="fas fa-layer-group"></i></div>
+                                <div>
+                                    <h4 class="font-bold">Full-Stack Architecture</h4>
+                                    <p class="text-sm text-cyber-text">Next.js, React, Node.js, and scalable database design.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-white/10 p-2 rounded text-white mr-4"><i class="fas fa-bolt"></i></div>
+                                <div>
+                                    <h4 class="font-bold">Performance Optimization</h4>
+                                    <p class="text-sm text-cyber-text">Sub-second load times, SEO optimization, and secure deployment.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="navigate('contact')" class="border border-white text-white hover:bg-white hover:text-black px-8 py-3 rounded-lg font-bold transition-colors relative z-10">
+                            Start a Project
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-20">
+                    <h3 class="text-2xl font-bold text-center mb-12">The Engagement Workflow</h3>
+                    <div class="grid md:grid-cols-4 gap-6 text-center">
+                        <div class="p-6 glass-panel rounded-xl relative">
+                            <div class="w-12 h-12 bg-cyber-darker border border-cyber-border rounded-full flex items-center justify-center mx-auto mb-4 text-cyber-blue font-mono font-bold">01</div>
+                            <h4 class="font-bold mb-2">Scoping</h4>
+                            <p class="text-sm text-cyber-text">Defining targets, goals, and rules of engagement.</p>
+                            <div class="hidden md:block absolute top-1/2 -right-3 w-6 h-[1px] bg-cyber-border"></div>
+                        </div>
+                        <div class="p-6 glass-panel rounded-xl relative">
+                            <div class="w-12 h-12 bg-cyber-darker border border-cyber-border rounded-full flex items-center justify-center mx-auto mb-4 text-cyber-blue font-mono font-bold">02</div>
+                            <h4 class="font-bold mb-2">Execution</h4>
+                            <p class="text-sm text-cyber-text">Active development or simulated cyber attacks.</p>
+                            <div class="hidden md:block absolute top-1/2 -right-3 w-6 h-[1px] bg-cyber-border"></div>
+                        </div>
+                        <div class="p-6 glass-panel rounded-xl relative">
+                            <div class="w-12 h-12 bg-cyber-darker border border-cyber-border rounded-full flex items-center justify-center mx-auto mb-4 text-cyber-blue font-mono font-bold">03</div>
+                            <h4 class="font-bold mb-2">Reporting</h4>
+                            <p class="text-sm text-cyber-text">Detailed documentation of vulnerabilities or codebase.</p>
+                            <div class="hidden md:block absolute top-1/2 -right-3 w-6 h-[1px] bg-cyber-border"></div>
+                        </div>
+                        <div class="p-6 glass-panel rounded-xl">
+                            <div class="w-12 h-12 bg-cyber-darker border border-cyber-border rounded-full flex items-center justify-center mx-auto mb-4 text-cyber-blue font-mono font-bold">04</div>
+                            <h4 class="font-bold mb-2">Remediation</h4>
+                            <p class="text-sm text-cyber-text">Patching flaws and final project deployment.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="academy" class="page-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Bilal's Elite Academy. <br><span class="text-gradient-blue">Secure Your Digital Edge.</span></h1>
+                    <p class="text-cyber-text max-w-2xl mx-auto mb-8">Gain access to elite, production-ready training modules designed for modern engineers and security operators.</p>
+                    
+                    <div id="filter-buttons" class="flex flex-wrap justify-center gap-4 mb-12">
+                        <button onclick="filterCourses('all', this)" class="px-6 py-2 rounded-full bg-cyber-blue text-black font-bold text-sm">All Courses</button>
+                        <button onclick="filterCourses('cybersecurity', this)" class="px-6 py-2 rounded-full glass-panel border border-cyber-border text-cyber-text hover:text-white text-sm transition-colors">Cybersecurity</button>
+                        <button onclick="filterCourses('web-development', this)" class="px-6 py-2 rounded-full glass-panel border border-cyber-border text-cyber-text hover:text-white text-sm transition-colors">Web Development</button>
+                    </div>
+                </div>
+
+                <div id="course-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <div class="course-card card-3d glass-panel rounded-xl overflow-hidden border border-cyber-border flex flex-col hover:border-cyber-blue hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] transition-all duration-300" data-category="web-development">
+                        <div class="h-48 bg-cyber-darker relative border-b border-cyber-border flex items-center justify-center overflow-hidden">
+                            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
+                            <div class="w-16 h-16 rounded-full bg-cyber-blue/10 border border-cyber-blue/30 flex items-center justify-center text-cyber-blue relative z-10 shadow-[0_0_15px_rgba(0,229,255,0.2)]">
+                                <i class="fas fa-cubes text-3xl"></i>
+                            </div>
+                            <span class="absolute top-4 left-4 bg-cyber-darker/90 backdrop-blur border border-cyber-border text-cyber-text text-[10px] font-mono px-2 py-0.5 rounded uppercase tracking-wider">MODULE_01</span>
+                            <span class="absolute top-4 right-4 bg-cyber-darker/90 backdrop-blur border border-cyber-blue/30 text-cyber-blue text-[10px] font-mono px-2 py-0.5 rounded uppercase tracking-wider">40 Hours</span>
+                        </div>
+                        <div class="p-6 flex-grow flex flex-col">
+                            <h3 class="text-xl font-bold mb-2 text-white">SaaS Engineering & Deployment</h3>
+                            <p class="text-sm text-cyber-text mb-6 flex-grow leading-relaxed">Master the architecture of building high-performance web applications and navigating technical client handoffs.</p>
+                            <div class="flex items-center justify-between mt-auto pt-4 border-t border-cyber-border">
+                                <div class="flex flex-col">
+                                    <span class="text-xs font-mono text-cyber-text/60 uppercase">Tuition Fee</span>
+                                    <span class="text-2xl font-bold text-white">$10</span>
+                                </div>
+                                <button onclick="openPaymentModal()" class="bg-cyber-blue/10 text-cyber-blue border border-cyber-blue/20 hover:bg-cyber-blue hover:text-black px-5 py-2.5 rounded font-bold transition-all duration-300 tracking-wide text-sm">Enroll Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-card card-3d glass-panel rounded-xl overflow-hidden border border-cyber-border flex flex-col hover:border-cyber-blue hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] transition-all duration-300" data-category="web-development">
+                        <div class="h-48 bg-cyber-darker relative border-b border-cyber-border flex items-center justify-center overflow-hidden">
+                            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
+                            <div class="w-16 h-16 rounded-full bg-white/10 border border-white/30 flex items-center justify-center text-white relative z-10 shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                                <i class="fas fa-laptop-code text-3xl"></i>
+                            </div>
+                            <span class="absolute top-4 left-4 bg-cyber-darker/90 backdrop-blur border border-cyber-border text-cyber-text text-[10px] font-mono px-2 py-0.5 rounded uppercase tracking-wider">MODULE_02</span>
+                            <span class="absolute top-4 right-4 bg-cyber-darker/90 backdrop-blur border border-white/30 text-white text-[10px] font-mono px-2 py-0.5 rounded uppercase tracking-wider">30 Hours</span>
+                        </div>
+                        <div class="p-6 flex-grow flex flex-col">
+                            <h3 class="text-xl font-bold mb-2 text-white">Website Designer</h3>
+                            <p class="text-sm text-cyber-text mb-6 flex-grow leading-relaxed">Master the art of creating stunning, responsive website designs. Learn modern frontend design systems and interfaces.</p>
+                            <div class="flex items-center justify-between mt-auto pt-4 border-t border-cyber-border">
+                                <div class="flex flex-col">
+                                    <span class="text-xs font-mono text-cyber-text/60 uppercase">Tuition Fee</span>
+                                    <span class="text-2xl font-bold text-white">$10</span>
+                                </div>
+                                <button onclick="openPaymentModal()" class="bg-white/10 text-white border border-white/20 hover:bg-white hover:text-black px-5 py-2.5 rounded font-bold transition-all duration-300 tracking-wide text-sm">Enroll Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-card card-3d glass-panel rounded-xl overflow-hidden border border-cyber-border flex flex-col hover:border-cyber-blue hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] transition-all duration-300" data-category="cybersecurity">
+                        <div class="h-48 bg-cyber-darker relative border-b border-cyber-border flex items-center justify-center overflow-hidden">
+                            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1614064641913-6b17c669d658?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
+                            <div class="w-16 h-16 rounded-full bg-cyber-purple/10 border border-cyber-purple/30 flex items-center justify-center text-cyber-purple relative z-10 shadow-[0_0_15px_rgba(123,44,191,0.2)]">
+                                <i class="fas fa-user-secret text-3xl"></i>
+                            </div>
+                            <span class="absolute top-4 left-4 bg-cyber-darker/90 backdrop-blur border border-cyber-border text-cyber-text text-[10px] font-mono px-2 py-0.5 rounded uppercase tracking-wider">MODULE_03</span>
+                            <span class="absolute top-4 right-4 bg-cyber-darker/90 backdrop-blur border border-cyber-purple/30 text-cyber-purple text-[10px] font-mono px-2 py-0.5 rounded uppercase tracking-wider">45 Hours</span>
+                        </div>
+                        <div class="p-6 flex-grow flex flex-col">
+                            <h3 class="text-xl font-bold mb-2 text-white">Pentesting</h3>
+                            <p class="text-sm text-cyber-text mb-6 flex-grow leading-relaxed">Master ethical hacking methodologies. Discover, analyze, and exploit architectural vulnerabilities within modern infrastructure environments.</p>
+                            <div class="flex items-center justify-between mt-auto pt-4 border-t border-cyber-border">
+                                <div class="flex flex-col">
+                                    <span class="text-xs font-mono text-cyber-text/60 uppercase">Tuition Fee</span>
+                                    <span class="text-2xl font-bold text-white">$10</span>
+                                </div>
+                                <button onclick="openPaymentModal()" class="bg-cyber-blue/10 text-cyber-blue border border-cyber-blue/20 hover:bg-cyber-blue hover:text-black px-5 py-2.5 rounded font-bold transition-all duration-300 tracking-wide text-sm">Enroll Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-20 p-8 glass-panel rounded-2xl border border-cyber-border max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
+                    <div class="w-24 h-24 shrink-0 rounded-full bg-gradient-to-br from-cyber-blue to-cyber-purple flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(0,229,255,0.4)]">
+                        <i class="fas fa-user-shield text-black"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">Why Partner With Bilal?</h3>
+                        <p class="text-cyber-text">We don't deal in generic templates or theoretical solutions. Every website engineered and every system assessed is tailored for maximum performance, bulletproof security, and high-converting results. We deliver production-ready execution that scales your business.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="page-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Initialize Connection</h1>
+                    <p class="text-cyber-text">Route your inquiry to the appropriate secure channel.</p>
+                </div>
+
+                <div class="flex justify-center mb-8">
+                    <a href="tel:0942943565" class="glass-panel border border-cyber-border rounded-full px-6 md:px-10 py-4 flex items-center gap-5 hover:border-cyber-blue hover:shadow-[0_0_20px_rgba(0,229,255,0.2)] transition-all duration-300 group cursor-pointer relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-cyber-blue/5 to-transparent -translate-x-full pointer-events-none"></div>
+                        <div class="w-14 h-14 rounded-full bg-cyber-blue/10 border border-cyber-blue/30 flex items-center justify-center text-cyber-blue group-hover:scale-110 group-hover:bg-cyber-blue group-hover:text-black transition-all duration-300 z-10">
+                            <i class="fas fa-phone-alt text-2xl"></i>
+                        </div>
+                        <div class="text-left z-10">
+                            <div class="text-sm text-cyber-blue uppercase tracking-widest font-mono mb-1 font-bold">Contact Bilal</div>
+                            <div class="text-2xl md:text-3xl font-bold text-white tracking-widest font-mono group-hover:text-cyber-blue transition-colors">0942 943 565</div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-6 mb-16">
+                    <a href="https://www.instagram.com/kiwizario?igsh=bjBtZnEwbng1cXVs" target="_blank" rel="noopener noreferrer" class="w-14 h-14 rounded-full glass-panel border border-cyber-border flex items-center justify-center text-cyber-text hover:text-[#E1306C] hover:border-[#E1306C] hover:shadow-[0_0_15px_rgba(225,48,108,0.4)] transition-all duration-300 group" title="Instagram">
+                        <i class="fab fa-instagram text-2xl group-hover:scale-110 transition-transform"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@trusted11110?_r=1&_t=ZS-97hlwP0ECd2" target="_blank" rel="noopener noreferrer" class="w-14 h-14 rounded-full glass-panel border border-cyber-border flex items-center justify-center text-cyber-text hover:text-white hover:border-white hover:shadow-[0_0_15px_rgba(255,255,255,0.4)] transition-all duration-300 group" title="TikTok">
+                        <i class="fab fa-tiktok text-2xl group-hover:scale-110 transition-transform"></i>
+                    </a>
+                    <a href="https://t.me/Fly_11c" target="_blank" rel="noopener noreferrer" class="w-14 h-14 rounded-full glass-panel border border-cyber-border flex items-center justify-center text-cyber-text hover:text-[#229ED9] hover:border-[#229ED9] hover:shadow-[0_0_15px_rgba(34,158,217,0.4)] transition-all duration-300 group" title="Telegram">
+                        <i class="fab fa-telegram text-2xl group-hover:scale-110 transition-transform"></i>
+                    </a>
+                    <a href="https://wa.me/251942943565" target="_blank" rel="noopener noreferrer" class="w-14 h-14 rounded-full glass-panel border border-cyber-border flex items-center justify-center text-cyber-text hover:text-[#25D366] hover:border-[#25D366] hover:shadow-[0_0_15px_rgba(37,211,102,0.4)] transition-all duration-300 group" title="WhatsApp">
+                        <i class="fab fa-whatsapp text-2xl group-hover:scale-110 transition-transform"></i>
+                    </a>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-8 max-w-5xl mx-auto">
+                    
+                    <div class="flex-1 glass-panel p-8 rounded-2xl border-t-4 border-t-cyber-red">
+                        <div class="flex items-center mb-6">
+                            <i class="fas fa-briefcase text-cyber-red text-2xl mr-3"></i>
+                            <h2 class="text-2xl font-bold">Business Partnerships</h2>
+                        </div>
+                        <p class="text-sm text-cyber-text mb-6">For pentesting scopes, web development projects, and corporate training.</p>
+                        
+                        <form onsubmit="event.preventDefault(); alert('Message sent.');" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-mono text-cyber-text mb-1">COMPANY / NAME</label>
+                                <input type="text" class="w-full bg-cyber-darker border border-cyber-border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-red transition-colors" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono text-cyber-text mb-1">SECURE EMAIL</label>
+                                <input type="email" class="w-full bg-cyber-darker border border-cyber-border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-red transition-colors" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono text-cyber-text mb-1">PROJECT SCOPE</label>
+                                <select class="w-full bg-cyber-darker border border-cyber-border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-red transition-colors">
+                                    <option>Penetration Testing</option>
+                                    <option>Web Development</option>
+                                    <option>Both / Hybrid</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono text-cyber-text mb-1">DETAILS</label>
+                                <textarea rows="4" class="w-full bg-cyber-darker border border-cyber-border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-red transition-colors" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-cyber-red hover:bg-red-600 text-white font-bold py-3 rounded-lg transition-colors mt-4">
+                                Transmit Request
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="flex-1 glass-panel p-8 rounded-2xl border-t-4 border-t-cyber-blue">
+                        <div class="flex items-center mb-6">
+                            <i class="fas fa-headset text-cyber-blue text-2xl mr-3"></i>
+                            <h2 class="text-2xl font-bold">Student Support</h2>
+                        </div>
+                        <p class="text-sm text-cyber-text mb-6">For course inquiries, technical assistance, or account management.</p>
+                        
+                        <form onsubmit="event.preventDefault(); alert('Ticket created.');" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-mono text-cyber-text mb-1">STUDENT NAME</label>
+                                <input type="text" class="w-full bg-cyber-darker border border-cyber-border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-blue transition-colors" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono text-cyber-text mb-1">EMAIL ADDRESS</label>
+                                <input type="email" class="w-full bg-cyber-darker border border-cyber-border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-blue transition-colors" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono text-cyber-text mb-1">INQUIRY TYPE</label>
+                                <select class="w-full bg-cyber-darker border border-cyber-border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-blue transition-colors">
+                                    <option>Course Question</option>
+                                    <option>Technical Issue</option>
+                                    <option>Billing</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono text-cyber-text mb-1">MESSAGE</label>
+                                <textarea rows="4" class="w-full bg-cyber-darker border border-cyber-border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-blue transition-colors" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-cyber-blue/20 text-cyber-blue hover:bg-cyber-blue hover:text-black border border-cyber-blue font-bold py-3 rounded-lg transition-colors mt-4">
+                                Open Ticket
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="payment-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-md opacity-0 transition-opacity duration-300">
+        <div class="glass-panel border border-cyber-blue p-8 rounded-2xl w-[90%] max-w-md relative transform scale-95 transition-all duration-300 shadow-[0_0_40px_rgba(0,229,255,0.15)] flex flex-col">
+            <button onclick="closePaymentModal()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-cyber-darker border border-cyber-border text-cyber-text hover:text-cyber-red hover:border-cyber-red transition-all duration-300 group">
+                <i class="fas fa-times group-hover:rotate-90 transition-transform duration-300"></i>
+            </button>
+            
+            <div class="text-center mb-8 mt-2">
+                <div class="w-16 h-16 bg-cyber-blue/10 border border-cyber-blue/30 rounded-full flex items-center justify-center mx-auto mb-4 text-cyber-blue text-2xl shadow-[0_0_15px_rgba(0,229,255,0.4)] relative">
+                    <div class="absolute inset-0 border border-cyber-blue rounded-full animate-ping opacity-20"></div>
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">Select Payment Method</h3>
+                <p class="text-cyber-text text-sm font-mono tracking-widest uppercase">Secure Encrypted Checkout</p>
+            </div>
+            
+            <div class="space-y-4 w-full">
+                <button id="telebirr-btn" onclick="processTelebirr()" class="w-full relative overflow-hidden group bg-[#00AEEF]/10 border border-[#00AEEF]/50 hover:bg-[#00AEEF] hover:text-white text-[#00AEEF] rounded-xl p-4 flex items-center justify-center gap-3 transition-all duration-300 shadow-[0_0_15px_rgba(0,174,239,0.2)] hover:shadow-[0_0_25px_rgba(0,174,239,0.6)]">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full pointer-events-none"></div>
+                    <i class="fas fa-mobile-alt text-2xl z-10"></i>
+                    <span class="font-bold text-lg tracking-wide z-10">Pay with Telebirr</span>
+                </button>
+            </div>
+            
+            <div class="mt-6 border-t border-cyber-border pt-4 text-center">
+                <span class="text-xs text-cyber-text/50 font-mono"><i class="fas fa-shield-alt mr-1"></i> End-to-End Encrypted Handshake</span>
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-t border-cyber-border glass-panel mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-cyber-text text-sm font-mono">
+                    &copy; 2026 BILAL Cyber & Dev. All rights reserved.
+                </div>
+                <div class="flex space-x-6 text-cyber-text">
+                    <a href="#" class="hover:text-cyber-blue transition-colors"><i class="fab fa-github text-xl"></i></a>
+                    <a href="#" class="hover:text-cyber-blue transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+                    <a href="#" class="hover:text-cyber-blue transition-colors"><i class="fab fa-linkedin text-xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function navigate(pageId) {
+            document.querySelectorAll('.page-section').forEach(page => page.classList.remove('active'));
+            const targetPage = document.getElementById(pageId);
+            if(targetPage) targetPage.classList.add('active');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-cyber-blue');
+                btn.classList.add('text-cyber-text');
+            });
+            const activeBtns = document.querySelectorAll(`button[onclick*="'${pageId}'"]`);
+            activeBtns.forEach(btn => {
+                btn.classList.remove('text-cyber-text');
+                btn.classList.add('text-cyber-blue');
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        function filterCourses(category, btn) {
+            document.querySelectorAll('#filter-buttons button').forEach(b => {
+                b.classList.remove('bg-cyber-blue', 'text-black');
+                b.classList.add('glass-panel', 'border', 'border-cyber-border', 'text-cyber-text');
+            });
+            btn.classList.add('bg-cyber-blue', 'text-black');
+            btn.classList.remove('glass-panel', 'border', 'border-cyber-border', 'text-cyber-text');
+
+            document.querySelectorAll('.course-card').forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+
+        function openPaymentModal() {
+            const modal = document.getElementById('payment-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.classList.add('opacity-100');
+                const panel = modal.querySelector('.glass-panel');
+                panel.classList.remove('scale-95');
+                panel.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closePaymentModal() {
+            const modal = document.getElementById('payment-modal');
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            
+            const panel = modal.querySelector('.glass-panel');
+            panel.classList.remove('scale-100');
+            panel.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        function processTelebirr() {
+            const btn = document.getElementById('telebirr-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin text-xl z-10"></i><span class="font-bold text-lg tracking-wide z-10">Processing...</span>';
+            btn.classList.add('bg-[#00AEEF]/30');
+            btn.classList.remove('hover:bg-[#00AEEF]');
+            
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-check-circle text-xl z-10"></i><span class="font-bold text-lg tracking-wide z-10">Redirecting...</span>';
+                btn.classList.add('bg-[#00AEEF]', 'text-white');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('bg-[#00AEEF]', 'text-white', 'bg-[#00AEEF]/30');
+                    btn.classList.add('hover:bg-[#00AEEF]');
+                    closePaymentModal();
+                }, 1500);
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
